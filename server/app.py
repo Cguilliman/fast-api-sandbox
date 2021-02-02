@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from app.config import settings
+from base.routers import register_router
+from config import settings
 
 
 app = FastAPI(
@@ -10,5 +11,4 @@ app = FastAPI(
 app.mount("/static", StaticFiles(directory="markup/static"), name="static")
 
 # Init routers
-from render.catalog import router
-app.include_router(router)
+register_router(app, "render.catalog.router")
