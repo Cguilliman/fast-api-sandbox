@@ -11,6 +11,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 jinja2 = "*"
 aiofiles = "*"
 sqlalchemy = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

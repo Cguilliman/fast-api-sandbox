@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from base.uploads.models import Image
 from base.uploads.usecases import save_base64_image
+from base.uploads.images.config import preview
 
 
 router = APIRouter(prefix="/api/v1")
@@ -16,5 +17,5 @@ class PostItem(BaseModel):
 
 @router.post("/post/create/")
 async def create_post(item: PostItem):
-    print(await save_base64_image(item.preview))
+    print(await save_base64_image(item.preview, preview))
     return {"status": "OK"}
