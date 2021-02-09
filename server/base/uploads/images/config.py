@@ -13,6 +13,7 @@ class ImageConfig:
     folder: str
     is_optimizer: bool
     optimization_quantity: int
+    is_webp: bool
     sizes: Optional[Dict]
 
 
@@ -20,5 +21,6 @@ preview = ImageConfig(
     folder="previews",
     is_optimizer=True,
     optimization_quantity=90,
+    is_webp=True,
     sizes={}
 )

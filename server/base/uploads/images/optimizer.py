@@ -6,7 +6,7 @@ import aiofiles
 QUALITY = 90
 
 
-async def optimize(file_path, optimize_quality: int = QUALITY):
+def optimize(file_path, optimize_quality: int = QUALITY):
     filename = file_path.rsplit("/", 1)[-1]
     name, extension = filename.rsplit(".", 1)
     extension = extension.capitalize()
@@ -36,5 +36,13 @@ async def optimize(file_path, optimize_quality: int = QUALITY):
         bytes_io,
         **save_kwargs
     )
+    buffer = bytes_io.getvalue()
+    return buffer
+
+
+def convert_to_webp(file_path):
+    image = Image.open(file_path).convert("RGB")
+    bytes_io = BytesIO()
+    image.save(bytes_io, "webp")
     buffer = bytes_io.getvalue()
     return buffer

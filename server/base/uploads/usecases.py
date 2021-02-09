@@ -4,7 +4,7 @@ import os
 from config import settings
 from .base import save_file
 from .models import Image
-from .images.optimizer import optimize
+from .images.optimizer import optimize, convert_to_webp
 from .images.config import ImageConfig
 from ..utils import get_random_string
 
@@ -20,6 +20,7 @@ def get_file_folder(base_folder, filename):
     return path
 
 
+# TODO: refactor
 async def image_process(filename, image_data, config: ImageConfig):
     base_folder = (
         f"{settings.UPLOADS_PATH}{config.folder}/"
@@ -28,10 +29,16 @@ async def image_process(filename, image_data, config: ImageConfig):
     folder = get_file_folder(base_folder, filename=filename)
     # Save instance image file
     instance_file_path = await save_file(folder, filename, image_data)
+    # Optimize image and rewrite instance
     if config.is_optimizer:
-        optimized_data = await optimize(instance_file_path, config.optimization_quantity)
+        optimized_data = optimize(instance_file_path, config.optimization_quantity)
         instance_file_path = await save_file(folder, filename, optimized_data, is_rewrite=True)
     # TODO: Add webp conversion, cropping
+    if config.is_webp:
+        webp_data = convert_to_webp(instance_file_path)
+        filename = f"{filename.rsplit('.', -1)[0]}.webp"
+        webp_file_path = await save_file(folder, filename, webp_data, is_rewrite=True)
+        print(webp_file_path)
     return {"instance": instance_file_path}
 
 
