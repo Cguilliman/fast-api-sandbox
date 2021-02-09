@@ -17,7 +17,7 @@ async def index(request: Request):
 @router.get("/catalog/", response_class=HTMLResponse)
 @router.get("/catalog/filters/{filters}/", response_class=HTMLResponse)
 async def catalog(request: Request, filters: str = None):
-    print(parse(filters))
+    filters = parse(filters)
     # TODO: Filter products
     return templates.TemplateResponse("catalog.html", {"request": request, "filters": filters})
 

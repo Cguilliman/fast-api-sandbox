@@ -3,9 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Some test</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
 </head>
 <body>
-    <h1>HI!</h1>
-    <p>{{ request }}</p>
+<!--    <h1>HI!</h1>-->
+<!--    <p>{{ request }}</p>-->
+    <form action="api/v1/post/create/" method="POST" id="create-post">
+        <input type="text" name="title">
+        <input type="text" name="description">
+        <input type="file" name="preview">
+        <input type="submit" name="Submit">
+    </form>
 </body>
+<script>
+        $(document).ready(function() {
+
+            var base64File = ""
+
+            function getBase64(file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    base64File = reader.result;
+                };
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            }
+
+            $("#create-post").submit((event) => {
+                var _data = $("#create-post").serializeArray();
+                var data = {};
+                $(_data).each(function(index, obj){
+                    data[obj.name] = obj.value;
+                });
+                var file = document.querySelector('#create-post > input[type="file"]').files[0];
+
+                getBase64(file)
+                data["preview"] = base64File
+                console.log(data)
+                console.log(JSON.stringify(data))
+                console.log(data)
+
+                $.ajax({
+                    url: "api/v1/post/create/",
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    success: function(result) {
+                        console.log(result)
+                    },
+                    error: function(xhr, resp, text) {
+                        console.log(xhr, resp, text)
+                    }
+                })
+
+                event.preventDefault();
+            })
+        });
+    </script>
 </html>
+<!--
+    console.log(data["preview"])
+    $("#create-post").serializeArray(),
+    JSON.stringify($("#create-post").serializeArray())
+-->
