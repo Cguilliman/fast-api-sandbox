@@ -5,6 +5,8 @@ from base.utils import get_random_string
 
 
 async def save_file(file_directory, filename, file, is_rewrite: bool = False):
+    if not file_directory.endswith("/"):
+        file_directory += "/"
     if not os.path.exists(file_directory):
         os.makedirs(file_directory)
 

@@ -14,7 +14,7 @@ class ImageConfig:
     is_optimizer: bool
     optimization_quantity: int
     is_webp: bool
-    sizes: Optional[Dict]
+    sizes: Optional[Iterable[Dict]]
 
 
 preview = ImageConfig(
@@ -22,5 +22,8 @@ preview = ImageConfig(
     is_optimizer=True,
     optimization_quantity=90,
     is_webp=True,
-    sizes={}
+    sizes=(
+        {"width": 200, "height": 100},
+        {"width": 50, "height": 20},
+    )
 )
