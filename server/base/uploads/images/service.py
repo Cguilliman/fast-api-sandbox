@@ -1,7 +1,6 @@
 import os
 
 from base.utils import get_random_string
-from config import settings
 from .optimizer import optimize, crop, convert_to_webp
 from .config import ImageConfig
 from ..base import save_file
