@@ -14,4 +14,5 @@ app.mount(settings.UPLOADS_URL, StaticFiles(directory=settings.UPLOADS_PATH), na
 
 # Init routers
 register_router(app, "render.catalog.router")
+register_router(app, "render.auth.router")
 register_router(app, "rest.catalog.router")
